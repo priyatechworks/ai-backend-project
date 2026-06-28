@@ -1,0 +1,21 @@
+---
+- hosts: ai_backend_server
+  become: yes
+  tasks:
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+
+    - name: Pull our API image
+      command: docker pull priyadharshini14/ai-backend:latest
+
+    - name: Run our API
+      command: docker run -d -p 8000:8000 priyadharshini14/ai-backend:latest
